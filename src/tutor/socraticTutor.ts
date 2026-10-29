@@ -192,20 +192,14 @@ export function getLocalSocraticResponse(
 }
 
 /**
- * Calls Gemini API if an API key is available, otherwise gracefully falls back to local Socratic engine
+ * Calls Gemini API directly with a client-supplied key
  */
-export async function querySocraticTutor(
+async function callDirectGemini(
   userInput: string,
   step: DecisionStep,
   profile: UserProfile,
-  apiKey?: string
+  apiKey: string
 ): Promise<{ response: TutorResponse; isFallback: boolean }> {
-  // If no API key provided, immediately use local engine
-  if (!apiKey || apiKey.trim() === '') {
-    const fallbackResponse = getLocalSocraticResponse(userInput, step, profile);
-    return { response: fallbackResponse, isFallback: true };
-  }
-
   try {
     const systemPrompt = `${TUTOR_SYSTEM_PROMPT}
 Bağlam Bilgisi:
@@ -261,7 +255,6 @@ Bağlam Bilgisi:
 
     parsed.reveals_answer = Boolean(parsed.reveals_answer || actuallyReveals);
 
-    // If inadvertently leaked, sanitize question to protect pedagogical value
     if (parsed.reveals_answer) {
       parsed.question =
         'Doğrudan cevabı aramak yerine: Bu adımda sistem güvenliğini ve veri bütünlüğünü tehdit eden en büyük risk nedir?';
@@ -271,8 +264,46 @@ Bağlam Bilgisi:
 
     return { response: parsed, isFallback: false };
   } catch (err) {
-    console.warn('Gemini API call failed, falling back to local engine:', err);
+    console.warn('Direct Gemini call failed, falling back to local engine:', err);
     const fallbackResponse = getLocalSocraticResponse(userInput, step, profile);
     return { response: fallbackResponse, isFallback: true };
   }
 }
+
+/**
+ * Calls Gemini API via backend proxy, direct client key, or local Socratic engine
+ */
+export async function querySocraticTutor(
+  userInput: string,
+  step: DecisionStep,
+  profile: UserProfile,
+  apiKey?: string
+): Promise<{ response: TutorResponse; isFallback: boolean }> {
+  // 1. If explicit client API key is provided, use direct call
+  if (apiKey && apiKey.trim() !== '') {
+    return callDirectGemini(userInput, step, profile, apiKey.trim());
+  }
+
+  // 2. Try serverless backend proxy (/api/tutor) for production deployments with server-side GEMINI_API_KEY
+  try {
+    const res = await fetch('/api/tutor', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userInput, step, profile }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      if (!data.isFallback && data.response) {
+        return { response: data.response, isFallback: false };
+      }
+    }
+  } catch {
+    // Backend endpoint not reachable (local dev / static host), continue to local engine
+  }
+
+  // 3. Gracefully fall back to local Socratic engine
+  const fallbackResponse = getLocalSocraticResponse(userInput, step, profile);
+  return { response: fallbackResponse, isFallback: true };
+}
+

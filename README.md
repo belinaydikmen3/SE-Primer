@@ -2,9 +2,9 @@
 
 [![Cypress E2E Tests](https://img.shields.io/badge/Cypress%20E2E-16%2F16%20Passed-10b981?style=flat-square&logo=cypress)](docs/testing.md)
 [![Tutor Evaluation](https://img.shields.io/badge/Tutor%20Eval-20%20Cases%20Etiketlendi-8b5cf6?style=flat-square)](eval/results.md)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)](tsconfig.json)
-[![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=flat-square&logo=vite)](vite.config.ts)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Vercel-Canl%C4%B1%20Yay%C4%B1n-black?style=flat-square&logo=vercel)](https://flying-iron-c566m6c.tmp.now)
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube)](https://youtu.be/quWFpJckWok)
+[![GitHub](https://img.shields.io/badge/GitHub-belinaydikmen3%2FSE--Primer-blue?style=flat-square&logo=github)](https://github.com/belinaydikmen3/SE-Primer)
 
 > **YZM301 Yazılım Mühendisliği Dersi Projesi**  
 > *"08:00. Hastane randevu sistemi çöktü. Nöbetçi yazılım mühendisi sensin. 300 hasta bekliyor. Dün gece yeni sürüm yayımlandı. Ne yaparsın?"*
@@ -13,14 +13,24 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
 
 ---
 
-## 1. Problem ve Çözüm Yaklaşımı
+## 1. Hızlı Bağlantılar ve Teslim Bilgileri
+
+- 🌐 **Canlı Uygulama (Vercel):** [https://flying-iron-c566m6c.tmp.now](https://flying-iron-c566m6c.tmp.now)  
+  *(Vercel Claim Linki: [https://vercel.com/claim-deployment?code=59b5a20c-7baf-4d0d-b5b9-3ef82453bd5f](https://vercel.com/claim-deployment?code=59b5a20c-7baf-4d0d-b5b9-3ef82453bd5f))*
+- 🎬 **YouTube Demo Videosu:** [https://youtu.be/quWFpJckWok](https://youtu.be/quWFpJckWok)
+- 💻 **GitHub Deposu:** [https://github.com/belinaydikmen3/SE-Primer](https://github.com/belinaydikmen3/SE-Primer)
+- 🤖 **Google AI Studio Sürümü Dokümantasyonu:** [`ai-studio/README.md`](ai-studio/README.md) ve [`ai-studio/prompt-config.json`](ai-studio/prompt-config.json)
+
+---
+
+## 2. Problem ve Çözüm Yaklaşımı
 
 - **Geleneksel Yaklaşım:** Yazılım mühendisliği teorisi genellikle statik slaytlar ve izole kod ödevleriyle öğretilir. Öğrenciler üretim (production) krizlerindeki ödünleşimleri (trade-offs), zaman baskısını ve veri mahremiyeti risklerini deneyimleyemezler.
 - **SE Primer Yaklaşımı:** Kullanıcıyı acil bir sağlık krizinin ortasına yerleştirir. Yapılan her seçimin teknik, operasyonel ve etik sonucunu anında gösterir. AI Tutor doğru cevabı fısıldamak yerine kullanıcının analitik düşünmesini sağlayan Sokratik sorular sorar.
 
 ---
 
-## 2. Temel Özellikler
+## 3. Temel Özellikler
 
 1. **Girişte 3 Soruluk Kişiselleştirme:**
    - *Deneyim Seviyesi:*
@@ -30,7 +40,7 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
    - *Rol:* Yazılım Geliştirici, Test Mühendisi veya Sistem/DevOps Mühendisi (anlatı ve odak noktası uyarlanır).
    - *Öğrenme Hedefi:* Mimari Kararlar, Test ve Kalite veya Güvenlik & KVKK.
 2. **Tek Kurgusal Sağlık Krizi ve 3 Kritik Karar:**
-   - **Karar 1 (Mimari & Geri Dönüş):** Eski sürüme dön (Rollback) vs Canlıda yama yap (Hotfix).
+   - **Karar 1 (Mimari & Geri Dönüş):** Eski sürüme dön (Rollback to v2.3.9) vs Canlıda yama yap (Hotfix).
    - **Karar 2 (Test & Dağıtım):** Kısa duman testlerini (Smoke Test) çalıştır vs Testleri atlayıp hemen aç.
    - **Karar 3 (KVKK & Gizlilik):** Logdaki hasta adını maskele (PII Masking) vs Olduğu gibi ekibe at.
 3. **Neden-Sonuç Kartları:** Her seçimden sonra "Ne oldu?" (operasyonel etki) ve "Neden oldu?" (teknik gerekçe) kartı gösterilir.
@@ -40,11 +50,11 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
 5. **Sokratik AI Tutor & Güvenlik Bariyeri:**
    - Kullanıcıya asla doğrudan cevabı söylemez; yönlendirici sorular ve teknik ipuçları sunar.
    - `reveals_answer` tespit mekanizmasıyla cevap sızıntılarını engeller.
-   - Google Gemini API desteği + Çevrimdışı/Yedek Sokratik Kural Motoru.
+   - Google Gemini API desteği (Serverless Proxy) + Çevrimdışı/Yedek Sokratik Kural Motoru.
 
 ---
 
-## 3. Yapılmayan 3 Özellik ve Nedenleri (Kapsam Dışı)
+## 4. Yapılmayan 3 Özellik ve Nedenleri (Kapsam Dışı)
 
 Ödev dokümanı (`SE Primer — Ödev.pdf`, Sayfa 3) gereğince aşağıdaki özellikler bilinçli olarak kapsam dışı bırakılmıştır:
 
@@ -54,50 +64,18 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
 
 ---
 
-## 4. Teknoloji Yığını
+## 5. Teknoloji Yığını
 
-- **Kullanıcı Arayüzü & Mantık:** React 19, TypeScript 5, Vite 6
+- **Kullanıcı Arayüzü & Mantık:** React 19, TypeScript 5, Vite 8
 - **Tasarım & Stil:** Vanilla Modern CSS (Mission-Critical Ops Center Tasarım Sistemi, Sıfır Yatay Kaydırma)
-- **Yapay Zekâ Entegrasyonu:** Google Gemini 1.5 Flash API + Dayanıklı Yerel Sokratik Kural Motoru
+- **Yapay Zekâ Entegrasyonu:** Google Gemini 1.5 Flash API + Vercel Node.js Serverless Proxy (`/api/tutor`) + Dayanıklı Yerel Sokratik Kural Motoru
 - **Test Otomasyonu:** Cypress 16.2.1 (E2E Test Paketi)
 - **Tasarım Spesifikasyonu:** Google Stitch UI Promptları (`DESIGN.md`)
+- **Canlı Dağıtım:** Vercel
 
 ---
 
-## 5. Uygulama Mimarisi
-
-```
-/
-├── README.md                 # Ana dokümantasyon
-├── spec.md                   # 12 bölümlük detaylı ürün spesifikasyonu
-├── DESIGN.md                 # Tasarım belirteçleri ve Google Stitch promptları
-├── package.json              # Bağımlılıklar ve npm scriptleri
-├── cypress.config.ts         # Cypress E2E test yapılandırması
-├── src/
-│   ├── types/index.ts        # TypeScript tip tanımları (GameState, Outcome, Profile)
-│   ├── scenario/data.ts      # Kriz anlatısı, kararlar ve 2 farklı son verisi
-│   ├── engine/gameEngine.ts  # Durum makinesi, sayaç ve sonuç hesaplama motoru
-│   ├── tutor/socraticTutor.ts# Sokratik AI Tutor, Gemini çağrısı ve regex denetçisi
-│   ├── components/           # Header, HintCard, TutorPanel, CauseEffectModal
-│   ├── screens/              # OnboardingScreen, CrisisScreen, OutcomeScreen
-│   ├── styles/index.css      # Mobil öncelikli CSS tasarım sistemi
-│   └── App.tsx               # Ana uygulama kapsayıcısı ve reaktif durum yönetimi
-├── cypress/
-│   ├── e2e/                  # 5 adet E2E test spec dosyası (16 test)
-│   └── videos/               # Test koşusu mp4 video kayıtları
-├── eval/
-│   ├── cases.json            # 20 adet etiketlenmiş öğrenci değerlendirme vakası
-│   ├── labeling-guide.md     # 5 hata türünün kılavuzu ve ölçütleri
-│   ├── results.md            # Değerlendirme analiz raporu
-│   └── analyze-results.js    # Otomatik analiz betiği (npm run eval)
-└── docs/
-    ├── testing.md            # Cypress test sonuçları ve kapsam matrisi
-    └── demo-script.md        # 60 saniyelik YouTube demo video senaryosu ve Türkçe seslendirme
-```
-
----
-
-## 6. Kurulum ve Çalıştırma Adımları
+## 6. Kurulum ve Yerel Çalıştırma Adımları
 
 ### 6.1 Gereksinimler
 - Node.js (v18 veya üzeri — v24 önerilir)
@@ -105,9 +83,9 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
 
 ### 6.2 Kurulum
 ```bash
-# Depoyu klonlayın veya proje dizinine geçin
-git clone <GITHUB_REPO_URL>
-cd SE-PRİMER
+# Depoyu klonlayın
+git clone https://github.com/belinaydikmen3/SE-Primer.git
+cd SE-Primer
 
 # Bağımlılıkları yükleyin
 npm install
@@ -127,18 +105,15 @@ npm run preview
 
 ---
 
-## 7. AI Tutor Yapılandırması
+## 7. Ortam Değişkenleri (Environment Variables) ve Güvenlik
 
-AI Tutor iki farklı çalışma moduna sahiptir:
+Gemini API anahtarları asla istemci kaynak koduna hardcode edilmez ve GitHub deposuna gönderilmez. Uygulama üç katmanlı güvenli bir yapıya sahiptir:
 
-1. **Canlı Google Gemini API Modu:**
-   - İsteğe bağlı olarak kök dizinde `.env` dosyası oluşturup anahtarınızı tanımlayabilirsiniz:
-     ```env
-     VITE_GEMINI_API_KEY=AIzaSy...
-     ```
-   - Veya uygulama açıkken Tutor panelindeki **`⚙️ API`** butonuna tıklayarak anahtarınızı oturum bazlı yapıştırabilirsiniz (anahtar asla sunucuya gitmez, kaynak koduna gömülmez).
-2. **Dayanıklı Yerel Sokratik Mod (Offline Fallback):**
-   - API anahtarı girilmediğinde veya kota/bağlantı hatası oluştuğunda uygulama çökmeyip otomatik olarak yerel kural motoruna geçer. Arayüzde `"⚠️ Yerel Sokratik Mod"` rozetiyle durum şeffafça kullanıcıya gösterilir.
+| Ortam Değişkeni | Bulunduğu Yer | Açıklama |
+|---|---|---|
+| `GEMINI_API_KEY` | **Vercel Proje Ayarları** (Server-side) | En güvenli yöntemdir. Vercel sunucusunda saklanır, istemciye sızmaz. `/api/tutor` serverless endpoint'i tarafından kullanılır. |
+| `VITE_GEMINI_API_KEY` | `.env.local` (Yerel Geliştirme) | Yerel testlerde Vite istemci tarafında opsiyonel olarak kullanılabilir. Git'e dahil edilmez (`.gitignore`). |
+| *Anahtarsız Mod* | Otomatik (Her ortamda) | Herhangi bir anahtar girilmediğinde sistem çökmez; arayüzde `"⚠️ Yerel Sokratik Mod"` rozetiyle deterministik kural motoru devreye girer. |
 
 ---
 
@@ -180,25 +155,12 @@ npm run eval
 
 ---
 
-## 10. Teslim Bağlantıları ve Yer Tutucular
+## 10. Google AI Studio Sürümü
 
-Aşağıdaki bağlantılar teslim gereksinimleri için yapılandırılmıştır:
+Google AI Studio (`aistudio.google.com`), Gemini modelleri üzerinde doğrudan prompt mühendisliği ve test yapılmasına olanak tanıyan geliştirici ortamıdır.
 
-- **GitHub Deposu:** Depo yerel olarak Git ile başlatılmıştır. Uzak repoya gönderme adımları aşağıda açıklanmıştır.
-  - `GitHub Repo Linki:` `[GitHub Deposu Oluşturulduktan Sonra Buraya Yapıştırılacaktır]`
-- **Google AI Studio Uygulama Bağlantısı:**
-  - `AI Studio Linki:` `[Google AI Studio üzerinden yayımlandığında buraya eklenecektir]`
-- **60 Saniyelik YouTube Demo Videosu:**
-  - Video sahne planı, Türkçe seslendirme metni ve kayıt hazırlık listesi [`docs/demo-script.md`](docs/demo-script.md) dosyasında eksiksiz hazırdır.
-  - **Yerel Video Kaydı (MP4):** [`docs/se_primer_40s_demo.mp4`](docs/se_primer_40s_demo.mp4) (44 saniyelik uçtan uca mobil oynanış, Sokratik AI Tutor ve Son A akışı).
-  - `YouTube Demo Linki:` `[Video YouTube'a yüklendiğinde buraya eklenecektir]`
-
-### GitHub Uzak Depoya Gönderme Adımları
-```bash
-git remote add origin https://github.com/<KULLANICI_ADINIZ>/SE-PRIMER.git
-git branch -M main
-git push -u origin main
-```
+- SE Primer'ın Sokratik AI Tutor bileşeni için hazırlanan tam parametreli model konfigürasyonu ve JSON şeması [`ai-studio/prompt-config.json`](ai-studio/prompt-config.json) dosyasında yer almaktadır.
+- Projeyi Google AI Studio üzerinde kendi Google hesabınızla içe aktarmak ve paylaşılabilir bir prompt bağlantısı oluşturmak için adım adım talimatlar [`ai-studio/README.md`](ai-studio/README.md) dosyasında açıklanmıştır.
 
 ---
 
