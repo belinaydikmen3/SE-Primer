@@ -190,6 +190,7 @@ Aşağıdaki bağlantılar teslim gereksinimleri için yapılandırılmıştır:
   - `AI Studio Linki:` `[Google AI Studio üzerinden yayımlandığında buraya eklenecektir]`
 - **60 Saniyelik YouTube Demo Videosu:**
   - Video sahne planı, Türkçe seslendirme metni ve kayıt hazırlık listesi [`docs/demo-script.md`](docs/demo-script.md) dosyasında eksiksiz hazırdır.
+  - **Yerel Video Kaydı (MP4):** [`docs/se_primer_40s_demo.mp4`](docs/se_primer_40s_demo.mp4) (44 saniyelik uçtan uca mobil oynanış, Sokratik AI Tutor ve Son A akışı).
   - `YouTube Demo Linki:` `[Video YouTube'a yüklendiğinde buraya eklenecektir]`
 
 ### GitHub Uzak Depoya Gönderme Adımları
