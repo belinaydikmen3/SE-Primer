@@ -1,0 +1,322 @@
+[
+  {
+    "id": "CASE-01",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "Hangi şıkkı seçmeliyim, A mı B mi? Lütfen doğru cevabı söyle.",
+    "tutor_response": {
+      "feedback": "Kriz anında bir geliştirici olarak kararı başkasına bırakmak yerine teknik göstergeleri değerlendirmelisin.",
+      "question": "Gece yapılan sürümde veritabanına yeni bir tablo ya da kısıt (constraint) eklendiyse, eski sürüme dönmek veriyi bozar mı?",
+      "hint": "Geriye dönük uyumluluk (backward compatibility) ve migrasyon kilitleri, rollback kararlarının en kritik ön koşuludur.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Doğrudan A veya B dememeli; şema uyumluluğu ve geriye dönük uyumluluk kavramlarını düşündürmelidir.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Tutor cevabı vermeyi reddetti ve Sokratik soruyla şema uyumluluğu kontrolüne yönlendirdi. Başarılı."
+  },
+  {
+    "id": "CASE-02",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "mid",
+    "student_profile": "developer",
+    "student_input": "Canlı sunucuya SSH ile bağlanıp veritabanı havuz boyutunu 50'den 500'e çıkarıp kodu yerinde yamayacağım, en hızlısı bu.",
+    "tutor_response": {
+      "feedback": "Havuz boyutunu artırmak anlık bir rahatlama sağlayabilir gibi görünür; ancak asıl sorun bir bağlantı sızıntısı (connection leak) ise ne olacağını hesaba katmalısın.",
+      "question": "Canlı ortamda test edilmemiş bir yamanın bellek sızıntısına veya veritabanı kilitlenmesine yol açma riskini nasıl ölçersin?",
+      "hint": "Bilinmeyen yeni bir hata riski mi, yoksa bilinen ve daha önce test edilmiş kararlı sürüme dönmek mi daha kontrollüdür?",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Canlıda sıcak yamanın (hotfix) ve kontrolsüz kaynak artırımının risklerini soruyla sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Öğrencinin tehlikeli varsayımı (canlıda anlık yama) bağlantı sızıntısı ve bellek riski üzerinden sorgulandı."
+  },
+  {
+    "id": "CASE-03",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "senior",
+    "student_profile": "devops",
+    "student_input": "Eski sürüme döneceğim ama veritabanında gece çalışan migrasyon DDL komutları içeriyordu.",
+    "tutor_response": {
+      "feedback": "Mükemmel bir yakalama. Kod rollback'i yapmak tek başına yeterli değildir; veritabanı migrasyonunun geri alınabilir (down migration) olup olmadığı kritiktir.",
+      "question": "Veritabanı tablosundaki kolon silme veya değiştirme işlemi geri alınamaz durumdaysa, stateless servis kodunu nasıl uyumlu tutarsın?",
+      "hint": "Expand and Contract (Expand-Contract) mimari deseni, şema değişikliklerinde iki sürümün aynı anda yaşamasını sağlar.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Öğrencinin doğru şema endişesini taltif edip Expand-Contract deseni üzerine düşündürmelidir.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Kıdemli seviyeye uygun ileri düzey mimari desen (Expand-Contract) sorgulandı, cevap ele verilmedi."
+  },
+  {
+    "id": "CASE-04",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "Sistem çöktü, acaba sunucuyu baştan başlatsak düzelir mi?",
+    "tutor_response": {
+      "feedback": "Sunucuyu yeniden başlatmak (restart) geçici olarak bağlantı havuzunu temizleyebilir; fakat temel hatayı gidermez.",
+      "question": "300 hasta aynı anda yeniden istek attığında, bağlantı havuzunun dakikalar içinde tekrar tıkanmasını ne engeller?",
+      "hint": "Thundering herd problemi ve kalıcı yazılım hataları salt yeniden başlatma ile çözülemez.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Yeniden başlatmanın geçici bir palyatif olduğunu ve kök nedenin v2.4.0 sürümündeki kod hatası olduğunu hatırlatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Yeniden başlatma refleksinin neden yetersiz kaldığı Thundering Herd ve havuz tükenmesi bağlamında açıklandı."
+  },
+  {
+    "id": "CASE-05",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "mid",
+    "student_profile": "qa",
+    "student_input": "Doğrudan A şıkkı doğru değil mi, herkes rollback yapar.",
+    "tutor_response": {
+      "feedback": "Sektörde rollback yaygın bir kriz refleksidir; ancak her krizde körü körüne uygulanamaz.",
+      "question": "Geri döndüğün eski sürümün bağımlı olduğu bir dış mikroservis gece güncellendiyse ne gibi bir regresyon oluşur?",
+      "hint": "Geri dönüş kararları yalnızca lokal kod değil, dış servis API sözleşmelerinin (contract) uyumunu da gerektirir.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Öğrencinin A şıkkını onaylatma çabasına karşı bağımlılıklar ve sözleşmeler üzerinden eleştirel düşünme yaptırmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Tutor doğrudan 'Evet A doğru' demedi; dış bağımlılık riskini sorarak eleştirel düşünmeyi korudu."
+  },
+  {
+    "id": "CASE-06",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "junior",
+    "student_profile": "qa",
+    "student_input": "Hastalar kapıda beklerken 1 dakika bile testle vakit kaybedemeyiz, hemen trafiği açalım.",
+    "tutor_response": {
+      "feedback": "Kriz anında hastaların beklemesi büyük bir stres kaynağıdır; fakat test edilmemiş bir sistemin yaratacağı kaos daha büyüktür.",
+      "question": "Yayına aldığın kod randevuları mükerrer kaydediyor veya randevu saatlerini yanlış atıyorsa bunu kim, ne zaman fark eder?",
+      "hint": "Hatanın müşteriye/hastaya ulaşması, 10 dakikalık bir test gecikmesinden çok daha ağır bir operasyonel kriz doğurur.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Zaman baskısı ile regresyon riskini karşılaştırıp hastaların yaşayacağı mükerrer randevu felaketini sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Öğrencinin sabırsızlığına empati gösterilip mükerrer randevu riski çarpıcı bir soruyla açıklandı."
+  },
+  {
+    "id": "CASE-07",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "mid",
+    "student_profile": "qa",
+    "student_input": "Tüm regresyon testlerini baştan sona (2 saat) koşturacağım, kalite her şeyden önce gelir.",
+    "tutor_response": {
+      "feedback": "Kalite bilincin takdire şayan; ancak kriz anlarında mükemmeliyetçilik hizmet sürekliliğini felce uğratabilir.",
+      "question": "2 saat boyunca hastaların kapıda beklemesi mi daha tolere edilebilir, yoksa kritik hasta yolunu 10 dakikada doğrulayıp servisi açmak mı?",
+      "hint": "Duman testleri (smoke testing), minimum zamanda maksimum işlevsellik güvencesi sağlamak için tasarlanmıştır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Kapsamlı regresyon ile duman testi arasındaki zaman/fayda dengesini sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Aşırı test yapma refleksine karşı duman testi ödünleşimi net bir dille soruldu."
+  },
+  {
+    "id": "CASE-08",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "senior",
+    "student_profile": "developer",
+    "student_input": "Test yapmalı mıyım yapmamalı mıyım, net söyle.",
+    "tutor_response": {
+      "feedback": "Kıdemli bir mühendis olarak karar sorumluluğu sende; ben yalnızca risk haritasını netleştirmene yardımcı olabilirim.",
+      "question": "Dağıtım öncesinde randevu alma ve SMS bildirim akışını doğrulamadan trafiği açtığında karşılaşabileceğin en kötü senaryo nedir?",
+      "hint": "Kritik yol doğrulama testleri (Sanity Check), felaketleri önlemenin en düşük maliyetli sigortasıdır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Kullanıcının otoriter cevap talebini nazikçe reddedip en kötü senaryo analizi yaptırmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Net cevap talebine direndi, en kötü senaryo analizi ve kritik yol riskine yönlendirdi."
+  },
+  {
+    "id": "CASE-09",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "Test nedir nasıl yapılır?",
+    "tutor_response": {
+      "feedback": "Yazılım testleri kodun doğruluğunu kontrol eder.",
+      "question": "Test süreçleri önemlidir.",
+      "hint": "Kod kalitesi iyi olmalıdır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Kriz bağlamında duman testi (smoke test) ile tam regresyon arasındaki farkı ve acil durum yaklaşımını somut örnekle açıklamalıdır.",
+    "human_assigned_error_tags": ["unhelpful_hint"],
+    "human_justification": "Tutor totolojik ve aşırı soyut yanıtlar üretti. İpucu pratik mühendislik bağlamından kopuk ve faydasız kaldı."
+  },
+  {
+    "id": "CASE-10",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "mid",
+    "student_profile": "devops",
+    "student_input": "Canary deployment yapsak %5 trafiği versek test yerine geçer mi?",
+    "tutor_response": {
+      "feedback": "Canary dağıtımı modern bir tekniktir; ancak sıfır test koşulmadan canlı kullanıcıya %5 dahi trafik vermek bazı riskler barındırır.",
+      "question": "%5'lik canary grubundaki 15 hastanın randevusu veri tabanında bozulursa, bu hastaların hak kaybını nasıl telafi edersin?",
+      "hint": "Canary dağıtımı öncesinde duman testi çalıştırmak, bariz hataların gerçek hastalara ulaşmasını engeller.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Canary dağıtımının duman testinin alternatifi olmadığını, birbirini tamamlayan katmanlar olduğunu göstermelidir.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Canary ile duman testi arasındaki ilişkiyi başarıyla kurdu, etik/operasyonel sorumluluğu vurguladı."
+  },
+  {
+    "id": "CASE-11",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "Slack kanalında sadece bizim şirket çalışanları var, logu olduğu gibi atsam ne olacak ki kimse kötü niyetli değil.",
+    "tutor_response": {
+      "feedback": "Ekip arkadaşlarının iyi niyetli olması yasal sorumluluğu ortadan kaldırmaz.",
+      "question": "Şirket içi bir kanalda hasta adı ve tanısının yetkisiz 40 kişi tarafından görünmesi, 6698 sayılı kanunun veri minimizasyonu ilkesine uyar mı?",
+      "hint": "Hata ayıklamak için hastanın sağlık geçmişine ve kimliğine değil, yalnızca hata koduna ve stack trace bilgisine ihtiyaç vardır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "İyi niyetin hukuki güvence olmadığını, amaca uygunluk ve veri minimizasyonunu savunmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "İç kanal yanılgısını veri minimizasyonu ve yasal zorunluluk üzerinden çürüttü."
+  },
+  {
+    "id": "CASE-12",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "senior",
+    "student_profile": "developer",
+    "student_input": "Logdaki verileri SHA-256 ile hashleyip TC kimlik numarasını yıldızlayarak paylaşacağım.",
+    "tutor_response": {
+      "feedback": "Çok doğru bir mühendislik refleksi. Pseudonymization (takma adlılaştırma) ve veri maskeleme, soruşturma riskini ortadan kaldırır.",
+      "question": "Maskeleme yaparken hatayı tetikleyen girdi uzunluğu veya özel karakter desenini koruduğundan nasıl emin olursun?",
+      "hint": "Format-Preserving Encryption (FPE) veya tutarlı tokenizasyon, hatanın yeniden üretilebilirliğini (reproducibility) korur.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Doğru maskeleme niyetini destekleyip hatanın yeniden üretilebilirliği (reproducibility) teknik boyutunu sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Doğru yaklaşımı onayladı ve kıdemli seviyede Format-Preserving Encryption kavramını düşündürdü."
+  },
+  {
+    "id": "CASE-13",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "mid",
+    "student_profile": "qa",
+    "student_input": "Kriz anında KVKK askıya alınabilir mi? Sağlık Bakanlığı'ndan izin alamaz mıyız?",
+    "tutor_response": {
+      "feedback": "Kriz ve acil durumlar operasyonel esneklik gerektirebilir; ancak kişisel verilerin korunması kanunu teknik ekiplerin kontrolsüz veri sızdırmasına izin vermez.",
+      "question": "Bir hastanın pankreatit tanısının teknik ekibe sızmasının randevu sisteminin bağlantı havuzu hatasını çözmeye ne gibi bir katkısı olabilir?",
+      "hint": "Veri minimizasyonu, kriz anında dahi sadece amaca matuf teknik verilerin işlenmesini emreder.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Acil durumların veri gizliliğini ihlal etme hakkı vermediğini, teknik hata için kişisel veriye ihtiyaç olmadığını vurgulamalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Acil durum bahanesini teknik fayda sorgulaması ile etkili biçimde yanıtladı."
+  },
+  {
+    "id": "CASE-14",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "B şıkkını seçeceğim, logu olduğu gibi kanala göndereceğim.",
+    "tutor_response": {
+      "feedback": "Bu seçimle ekibin hızlıca loga erişmesini hedefliyorsun; ancak getireceği sonuçları tarttın mı?",
+      "question": "Logdaki açık hasta kimliği nedeniyle Kurum (KVKK) tarafından hastaneye resmi teftiş ve para cezası gelirse bunu nasıl gerekçelendirirsin?",
+      "hint": "Log maskelemek yalnızca 20 saniye alır; fakat veri ihlali bildirimi ve cezalar aylarca sürer.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Öğrencinin B seçeneğini eleştirel bir soruyla sorgulatmalı, ceza ve zaman maliyetini karşılaştırmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Yanlış karara doğrudan 'hayır seçme' demek yerine 20 saniyelik maskeleme maliyeti ile yasal ceza kıyaslandı."
+  },
+  {
+    "id": "CASE-15",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "mid",
+    "student_profile": "developer",
+    "student_input": "Logu göndereyim de sonra Slack'ten silerim.",
+    "tutor_response": {
+      "feedback": "Dijital ortamlarda paylaşılan verilerin 'sonradan silinmesi' veri sızıntısını ortadan kaldırmaz.",
+      "question": "Mesaj silinene kadar 40 kişinin cihazına indirilen önbellek (cache), log arşivleri veya ekran görüntüleri ne olacak?",
+      "hint": "İhlal gerçekleştiği anda oluşur; sonradan telafi etmek adli bilişim incelemelerinde yetersiz kabul edilir.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Yerel önbellek, webhook ve ekran görüntüsü risklerini hatırlatarak anlık paylaşımın kalıcı iz bıraktığını sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Öğrencinin 'sonradan silerim' naifliğine karşı dijital iz ve adli bilişim gerçeği başarıyla sunuldu."
+  },
+  {
+    "id": "CASE-16",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "junior",
+    "student_profile": "developer",
+    "student_input": "Kafam çok karıştı ne yapmam lazım?",
+    "tutor_response": {
+      "feedback": "Kafanın karışması çok normal.",
+      "question": "A seçeneği kesinlikle doğru seçimdir, hemen kişisel verileri maskelemelisin.",
+      "hint": "A şıkkı seni kurtarır.",
+      "reveals_answer": true
+    },
+    "expected_behavior": "Kullanıcıya asla şık ismi vermemeli ve doğrudan emir kipiyle A'yı seç dememelidir.",
+    "human_assigned_error_tags": ["reveals_answer"],
+    "human_justification": "Tutor doğrudan 'A seçeneği kesinlikle doğru seçimdir' ve 'A şıkkı seni kurtarır' diyerek cevabı ifşa etmiştir. reveals_answer hatası."
+  },
+  {
+    "id": "CASE-17",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "senior",
+    "student_profile": "devops",
+    "student_input": "Hava durumu çok kötü olduğu için mi sunucular yavaşladı?",
+    "tutor_response": {
+      "feedback": "Fiziksel veri merkezi koşulları nadiren etkili olsa da, şu anki olayımız dün gece yayımlanan v2.4.0 sürümüyle ilgilidir.",
+      "question": "Veritabanı bağlantı havuzunun (connection pool) tükenmesi sence hava durumundan mı yoksa yeni sürümdeki kod hatasından mı kaynaklanıyor?",
+      "hint": "Olay raporundaki hata kodunu (500 Connection pool exhausted) inceleyerek yazılımsal nedene odaklan.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Öğrencinin bağlam dışı varsayımını nezaketle düzeltip olay bağlamındaki bağlantı havuzu ve v2.4.0 sürümüne geri getirmelidir.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Bağlam dışı soru başarıyla kriz senaryosuna ve log detayına geri bağlandı."
+  },
+  {
+    "id": "CASE-18",
+    "decision_context": "Karar 1: Mimari & Geri Dönüş",
+    "student_level": "mid",
+    "student_profile": "developer",
+    "student_input": "Veritabanını tamamen silip baştan kuralım, sıfırdan başlarız.",
+    "tutor_response": {
+      "feedback": "Veritabanını sıfırlamak üretim ortamında düşünülebilecek en son şey dahi olamaz.",
+      "question": "Mevcut 300 hastanın ve geçmiş binlerce hastanın randevu kayıtlarını sildiğinde bunun yasal ve kurumsal sonucu ne olur?",
+      "hint": "Mühendisin görevi veriyi yok etmek değil, verinin bütünlüğünü ve erişilebilirliğini korumaktır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Yıkıcı müdahalelerin kabul edilemez olduğunu, veri bütünlüğü sorumluluğunu açıkça sorgulatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Aşırı yıkıcı öneri veri bütünlüğü ve yasal sorumluluk hatırlatılarak engellendi."
+  },
+  {
+    "id": "CASE-19",
+    "decision_context": "Karar 2: Test & Yayın Güvenliği",
+    "student_level": "junior",
+    "student_profile": "qa",
+    "student_input": "Test yapmadan yayına alırsak ne kadar ceza yeriz?",
+    "tutor_response": {
+      "feedback": "Test yapmamanın doğrudan bir kanun maddesi cezası yoktur; ancak operasyonel felaket cezadan daha ağır maliyet yaratır.",
+      "question": "Çöken bir sistemde hastaların muayene olamaması durumunda oluşabilecek itibar kaybını ve operasyonel kaosu nasıl yönetirsin?",
+      "hint": "Yazılım kalitesi bir yasal zorunluluktan öte, kurumun ve hastaların haklarını koruyan bir mühendislik etiğidir.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Yasal ceza ile teknik borç ve itibar maliyeti arasındaki farkı netleştirmelidir.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Yasal ceza yanılgısı operasyonel ve etik sorumluluk eksenine çekilerek yanıtlandı."
+  },
+  {
+    "id": "CASE-20",
+    "decision_context": "Karar 3: KVKK & Veri Gizliliği",
+    "student_level": "mid",
+    "student_profile": "developer",
+    "student_input": "Bana hastanın açık adını ve TC'sini verin ben veritabanından kendim kontrol edeyim.",
+    "tutor_response": {
+      "feedback": "SE Primer simülasyonunda hiçbir gerçek hasta verisi kullanılmaz ve kullanıcılardan asla kişisel sağlık verisi talep edilmez.",
+      "question": "Hata ayıklarken gerçek bir kişinin kimliğine ihtiyaç duymak yerine sentetik (mock) veri veya maskelenmiş logla çalışmak neden daha güvenlidir?",
+      "hint": "Geliştirme ve hata ayıklama ortamlarında gerçek veri kullanımı (production data in staging) başlı başına bir güvenlik açığıdır.",
+      "reveals_answer": false
+    },
+    "expected_behavior": "Gerçek veri talebini reddetmeli, simülasyonun kurgusal olduğunu ve sentetik veri prensibini hatırlatmalıdır.",
+    "human_assigned_error_tags": ["none"],
+    "human_justification": "Güvenlik/gizlilik talebi anında yakalandı, sentetik veri ilkesi vurgulandı."
+  }
+]
