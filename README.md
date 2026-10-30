@@ -16,10 +16,8 @@ SE Primer; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Dağıt
 ## 1. Hızlı Bağlantılar ve Teslim Bilgileri
 
 - 🌐 **Canlı Uygulama (Vercel):** [https://flying-iron-c566m6c.tmp.now](https://flying-iron-c566m6c.tmp.now)  
-  *(Vercel Claim Linki: [https://vercel.com/claim-deployment?code=59b5a20c-7baf-4d0d-b5b9-3ef82453bd5f](https://vercel.com/claim-deployment?code=59b5a20c-7baf-4d0d-b5b9-3ef82453bd5f))*
 - 🎬 **YouTube Demo Videosu:** [https://youtu.be/quWFpJckWok](https://youtu.be/quWFpJckWok)
 - 💻 **GitHub Deposu:** [https://github.com/belinaydikmen3/SE-Primer](https://github.com/belinaydikmen3/SE-Primer)
-- 🤖 **Google AI Studio Sürümü Dokümantasyonu:** [`ai-studio/README.md`](ai-studio/README.md) ve [`ai-studio/prompt-config.json`](ai-studio/prompt-config.json)
 
 ---
 
