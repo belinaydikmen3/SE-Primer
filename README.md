@@ -153,16 +153,7 @@ npm run eval
 
 ---
 
-## 10. Google AI Studio Sürümü
-
-Google AI Studio (`aistudio.google.com`), Gemini modelleri üzerinde doğrudan prompt mühendisliği ve test yapılmasına olanak tanıyan geliştirici ortamıdır.
-
-- SE Primer'ın Sokratik AI Tutor bileşeni için hazırlanan tam parametreli model konfigürasyonu ve JSON şeması [`ai-studio/prompt-config.json`](ai-studio/prompt-config.json) dosyasında yer almaktadır.
-- Projeyi Google AI Studio üzerinde kendi Google hesabınızla içe aktarmak ve paylaşılabilir bir prompt bağlantısı oluşturmak için adım adım talimatlar [`ai-studio/README.md`](ai-studio/README.md) dosyasında açıklanmıştır.
-
----
-
-## 11. Mobil Ekran Görüntüleri (Screenshots)
+## 10. Mobil Ekran Görüntüleri (Screenshots)
 
 | Ekran 1 — Kişiselleştirme | Ekran 2 — Kriz & AI Tutor | Ekran 3 — Sonuç Raporu |
 |:---:|:---:|:---:|
@@ -170,7 +161,7 @@ Google AI Studio (`aistudio.google.com`), Gemini modelleri üzerinde doğrudan p
 
 ---
 
-## 12. Bilinen Sınırlılıklar
+## 11. Bilinen Sınırlılıklar
 
 1. **Gemini API Kotası:** Ücretsiz AI Studio katmanında dakikada 15 istek sınırı bulunmaktadır; kota aşıldığında uygulama yerel Sokratik motora kesintisiz geçmektedir.
 2. **Tek Oturumluk Bellek:** Skorlar ve kararlar oturum bazlı saklanır; tarayıcı tamamen kapatıldığında kriz sıfırlanır.
