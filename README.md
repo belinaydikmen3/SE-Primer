@@ -1,10 +1,12 @@
 # The Primer v2 — Makine Öğrenmesi ile Davranışsal Kişiselleştirilmiş Yazılım Mühendisliği Kriz Simülasyonu
 
-[![Cypress E2E Tests](https://img.shields.io/badge/Cypress%20E2E-18%2F18%20Passed-10b981?style=flat-square&logo=cypress)](docs/testing.md)
+[![Cypress E2E Tests](https://img.shields.io/badge/Cypress%20E2E-21%2F21%20Passed-10b981?style=flat-square&logo=cypress)](docs/testing.md)
 [![ONNX Runtime Web](https://img.shields.io/badge/ONNX%20Runtime%20Web-v2.0%20WASM-blue?style=flat-square)](model/README.md)
 [![Model Eval](https://img.shields.io/badge/Model%20F1-0.8636%20(%3E=0.70)-purple?style=flat-square)](model/config.json)
 [![Differential Parity](https://img.shields.io/badge/Parity%20Tolerance-%3C1e--4%20Verified-success?style=flat-square)](tests/parite.json)
+[![Tutor Evaluation](https://img.shields.io/badge/Tutor%20Eval-20%20Cases%20Etiketlendi-8b5cf6?style=flat-square)](eval/results.md)
 [![Live Demo](https://img.shields.io/badge/Vercel-Canl%C4%B1%20Yay%C4%B1n-black?style=flat-square&logo=vercel)](https://flying-iron-c566m6c.tmp.now)
+[![YouTube Demo](https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube)](https://youtu.be/quWFpJckWok)
 [![GitHub](https://img.shields.io/badge/GitHub-belinaydikmen3%2FSE--Primer-blue?style=flat-square&logo=github)](https://github.com/belinaydikmen3/SE-Primer)
 
 > **YZM301 Yazılım Mühendisliği Dersi Projesi**  
@@ -14,21 +16,33 @@ The Primer v2; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Da�
 
 ---
 
-## 1. The Primer v1 ile v2 Arasındaki Farklar
+## 1. Hızlı Bağlantılar ve Teslim Bilgileri
+
+- 🌐 **Canlı Uygulama (Vercel):** [https://flying-iron-c566m6c.tmp.now](https://flying-iron-c566m6c.tmp.now)
+- 🎬 **YouTube Demo Videosu:** [https://youtu.be/quWFpJckWok](https://youtu.be/quWFpJckWok)
+- 💻 **GitHub Deposu:** [https://github.com/belinaydikmen3/SE-Primer](https://github.com/belinaydikmen3/SE-Primer)
+- 📋 **Sistem Spesifikasyonu:** [`spec.md`](spec.md)
+- 🚀 **Sürüm ve Dağıtım Planı:** [`RELEASE.md`](RELEASE.md)
+- 📝 **YZM301 Sınav Tasarımı:** [`SINAV_TASARIMI.md`](SINAV_TASARIMI.md)
+- 🎥 **75s Demo Senaryosu:** [`DEMO_SENARYOSU.md`](DEMO_SENARYOSU.md)
+
+---
+
+## 2. The Primer v1 ile v2 Arasındaki Mimari Farklar
 
 | Kriter | The Primer v1 | The Primer v2 |
 |---|---|---|
 | **Kişiselleştirme Motoru** | Başlangıçtaki 3 anket sorusuna dayalı sabit if/else kuralları | Oyuncunun sahnelerdeki anlık davranışlarını izleyen **ONNX Makine Öğrenmesi Modeli** |
 | **Model Hedefi** | Yok | **"Oyuncunun mevcut sahnede zorlandığını ve desteğe ihtiyacı olup olmadığını tahmin etmek"** (`destek_gerekli`: 0 / 1) |
-| **Girdi Davranışları** | Ölçülmüyordu | 8 metrik: `karar_suresi_sn`, `karar_degistirme_sayisi`, `onceki_basarisiz_karar_sayisi`, `ortalama_karar_suresi_sn`, `sahne_zorlugu`, `yardim_kullanim_sayisi`, `oyuncu_deneyim_seviyesi`, `sahne_ilerleme_orani` |
-| **Oyun Adaptasyonu** | Statik ipucu ve sayaç | Model desteğe ihtiyaç olduğunu tahmin ettiğinde nazik AI Tutor desteği (`AdaptivePromptCard`) ve süre rahatlatması |
-| **Veri Toplama Altyapısı** | Yok | Anonim KVKK uyumlu **Veri Toplama Modu**, `data/oturumlar.csv`, `data/SOZLUK.md` ve CSV dışa aktarımı |
-| **Test Mimarisi** | Cypress E2E (16 test) | Cypress E2E (18 test) + Python Oracle ile **Diferansiyel Parite Testi** (`abs(p_python - p_browser) < 1e-4`) |
+| **Girdi Davranışları** | Ölçülmüyordu | 8 davranışsal metrik: `karar_suresi_sn`, `karar_degistirme_sayisi`, `onceki_basarisiz_karar_sayisi`, `ortalama_karar_suresi_sn`, `sahne_zorlugu`, `yardim_kullanim_sayisi`, `oyuncu_deneyim_seviyesi`, `sahne_ilerleme_orani` |
+| **Oyun Adaptasyonu** | Statik ipucu ve sayaç | Model desteğe ihtiyaç olduğunu tahmin ettiğinde nazik AI Tutor desteği (`AdaptivePromptCard`) ve süre rahatlatması (+30s) |
+| **Veri Toplama Altyapısı** | Yok | Anonim KVKK uyumlu **Veri Toplama Modu**, `data/oturumlar.csv`, `data/SOZLUK.md` ve tek tıkla CSV dışa aktarımı (`[data-cy="export-csv-btn"]`) |
+| **Test Mimarisi** | Cypress E2E (16 test) | Cypress E2E (8 spec, 21 test) + Python Oracle ile **Diferansiyel Parite Testi** (`abs(p_python - p_browser) < 1e-4`) |
 | **Model Dağıtımı** | Doğrudan kod içi kural | Hugging Face Hub (Commit Hash Sabitleme) + ONNX Runtime Web |
 
 ---
 
-## 2. En Fazla 3 Komutla Temel Kurulum ve Çalıştırma
+## 3. En Fazla 3 Komutla Temel Kurulum ve Çalıştırma
 
 Projeyi yerel ortamınızda baştan sona ayağa kaldırmak için gereken 3 temel komut:
 
@@ -47,9 +61,9 @@ Tarayıcınızda `http://localhost:5173` adresine giderek uygulamayı açabilirs
 
 ---
 
-## 3. Makine Öğrenmesi Mimarisi ve Eğitim Süreci
+## 4. Makine Öğrenmesi Mimarisi ve Eğitim Süreci
 
-### 3.1 Model ve Özellik Sözleşmesi
+### 4.1 Model ve Özellik Sözleşmesi
 Model, scikit-learn ile eğitilmiş ve `skl2onnx` ile ONNX formatına (`model/model.onnx`) dönüştürülmüş şeffaf bir **Karar Ağacı (`DecisionTreeClassifier`, max_depth=3)** modelidir.
 
 Modelin beklediği 8 öznitelik ve kesin sıralama:
@@ -57,19 +71,19 @@ Modelin beklediği 8 öznitelik ve kesin sıralama:
 2. `karar_degistirme_sayisi` (float32): Şıklar arasındaki tereddüt/geçiş sayısı.
 3. `onceki_basarisiz_karar_sayisi` (float32): Önceki adımlardaki hatalı seçim sayısı.
 4. `ortalama_karar_suresi_sn` (float32): Oturumdaki ortalama karar süresi.
-5. `sahne_zorlugu` (float32): Sahnenin zorluk katsayısı (0.50 - 0.80).
+5. `sahne_zorlugu` (float32): Sahnenin bilişsel zorluk katsayısı (0.50 - 0.80).
 6. `yardim_kullanim_sayisi` (float32): Alınan ipucu/tutor danışma sayısı.
 7. `oyuncu_deneyim_seviyesi` (float32): Junior=0, Mid=1, Senior=2.
 8. `sahne_ilerleme_orani` (float32): Adım ilerlemesi (0.33, 0.67, 1.00).
 
-### 3.2 Tekrarlanabilir Eğitim ve Oturum Sızıntısını Önleme
+### 4.2 Tekrarlanabilir Eğitim ve Oturum Sızıntısını Önleme
 - **Komut:** `python train.py`
 - **Tohum (Seed):** `random_state=42`
 - **Bölümleme:** `GroupShuffleSplit` kullanılarak aynı oturuma ait kararların hem eğitim hem test setine dağılması (session leakage) engellenmiştir.
-- **Kabul Eşiği:** $\text{F1} \ge 0.70$ (Eğitim öncesi tanımlanmıştır; eşik geçilemezse `train.py` başarısız çıkış koduyla durur).
+- **Kabul Eşiği:** $\text{F1} \ge 0.70$ (Eğitim öncesi tanımlanmıştır; eşik geçilemezse `train.py` başarısız çıkış koduyla durur ve model yayınlanmaz).
 
 **Gerçekleşen Eğitim Metrikleri:**
-- F1 Skoru: **0.8636** (Kabul eşiği $\ge 0.70$ geçildi)
+- F1 Skoru: **0.8636** (Kabul eşiği $\ge 0.70$ başarıyla geçildi)
 - Precision: **1.0000** | Recall: **0.7600** | Accuracy: **0.8667**
 - Sklearn vs ONNX Sayısal Farkı: **$8.51 \times 10^{-9}$** ($< 10^{-4}$ tolerans sağlandı)
 - Detaylı model kartı: [`model/README.md`](model/README.md)
@@ -77,9 +91,9 @@ Modelin beklediği 8 öznitelik ve kesin sıralama:
 
 ---
 
-## 4. Tarayıcıda ONNX Çıkarımı ve Davranışsal Adaptasyon
+## 5. Tarayıcıda ONNX Çıkarımı ve Davranışsal Adaptasyon
 
-- Tarayıcıda `onnxruntime-web` kütüphanesi WebAssembly (`wasm`) backend'i ile çalıştırılır.
+- Tarayıcıda `onnxruntime-web` kütüphanesi WebAssembly (`wasm`) backend'i ile çalıştırılır (`src/services/onnxService.ts`).
 - Oyuncu sahnede karar verirken geçen süre ve tereddütler ölçülür; model periyodik olarak çıkarım yapar.
 - Model pozitif sınıf olasılığı $p \ge 0.50$ (`destek_gerekli = 1`) hesapladığında:
   - Ekranda mor renkli `[data-cy="adaptive-prompt-card"]` belirir:  
@@ -90,7 +104,7 @@ Modelin beklediği 8 öznitelik ve kesin sıralama:
 
 ---
 
-## 5. Veri Toplama Sistemi (Data Collection Mode)
+## 6. Veri Toplama Sistemi (Data Collection Mode)
 
 - **Dosya:** `data/oturumlar.csv`
 - **Sözlük:** [`data/SOZLUK.md`](data/SOZLUK.md)
@@ -103,10 +117,10 @@ Modelin beklediği 8 öznitelik ve kesin sıralama:
 
 ---
 
-## 6. Python Test Oracle ve Cypress Diferansiyel Parite Testi
+## 7. Python Test Oracle ve Cypress Diferansiyel Parite Testi
 
 - **Python Oracle Betiği:** `python tests/parite.py`
-  - `model/model.onnx` dosyasını `onnxruntime` ile çalıştırarak en az 5 farklı referans girdi vektörü için altın standart olasılıkları hesaplar ve `tests/parite.json` dosyasına yazar.
+  - `model/model.onnx` dosyasını `onnxruntime` ile çalıştırarak referans girdi vektörleri için altın standart olasılıkları hesaplar ve `tests/parite.json` dosyasına yazar.
 - **Geliştirici Denetleyicisi (Dev Inspector):**
   - Uygulama başlığındaki `⚙️ ML` butonu tıklandığında açılır.
   - Tahmin edilen anlık olasılık `data-cy="p"` seçicisiyle DOM'da erişilebilirdir.
@@ -115,7 +129,7 @@ Modelin beklediği 8 öznitelik ve kesin sıralama:
 
 ---
 
-## 7. Testleri Çalıştırma
+## 8. Testleri Çalıştırma ve Test Kapsamı
 
 ```bash
 # 1. Statik kod analizi (Oxlint)
@@ -131,44 +145,58 @@ npm run eval
 npm run test:e2e
 ```
 
-**Cypress Test Kapsamı (18/18 Başarılı):**
-1. `01_onboarding_and_personalization.cy.ts` (Form, rol, hedef ve v2 rozetleri)
-2. `02_beginner_and_experienced_flows.cy.ts` (Junior ipucu, Senior 60s sayaç ve zaman aşımı)
-3. `03_game_paths_and_outcomes.cy.ts` (Son A, Son B ve çift tıklama koruması)
-4. `04_socratic_tutor_and_safety.cy.ts` (Sokratik Tutor ve cevap ele vermeme güvenlik bariyeri)
-5. `05_mobile_viewport.cy.ts` (iPhone SE ve modern mobil ekranlarda sıfır yatay kaydırma)
-6. `06_demo_walkthrough_40s.cy.ts` (Baştan sona kriz akışı)
-7. `07_v2_model_inference_and_adaptation.cy.ts` (Model çıkarımı, adaptif kart tetiklenmesi, CSV dışa aktarımı)
-8. `08_v2_parity_and_differential.cy.ts` (Python Oracle ile WebAssembly diferansiyel parite doğrulaması)
+**Cypress Test Kapsamı (8 Spec, 21/21 Başarılı):**
+1. `01_onboarding_and_personalization.cy.ts` (Form, rol, hedef ve v2 rozetleri — 2 test)
+2. `02_beginner_and_experienced_flows.cy.ts` (Junior ipucu, Senior 60s sayaç ve zaman aşımı — 4 test)
+3. `03_game_paths_and_outcomes.cy.ts` (Son A, Son B ve çift tıklama koruması — 4 test)
+4. `04_socratic_tutor_and_safety.cy.ts` (Sokratik Tutor ve cevap ele vermeme güvenlik bariyeri — 3 test)
+5. `05_mobile_viewport.cy.ts` (iPhone SE, iPhone 14/15/16 ve Pixel 7 ekranlarında sıfır yatay kaydırma — 3 test)
+6. `06_demo_walkthrough_40s.cy.ts` (Baştan sona kriz akışı — 1 test)
+7. `07_v2_model_inference_and_adaptation.cy.ts` (Model çıkarımı, adaptif kart tetiklenmesi, CSV dışa aktarımı — 3 test)
+8. `08_v2_parity_and_differential.cy.ts` (Python Oracle ile WebAssembly diferansiyel parite doğrulaması — 1 test)
 
 ---
 
-## 8. Hugging Face Model Yayınlama ve Sürüm Sabitleme
+## 9. Hugging Face Model Yayınlama ve Sürüm Sabitleme
 
-Model dosyaları Hugging Face Hub üzerinde herkese açık bir model deposunda yayınlanmaya hazır şekilde yapılandırılmıştır.
+Model dosyaları (`model/model.onnx`, `model/config.json`, `model/README.md`), Hugging Face Hub üzerinde sürümlü bir model deposunda yayınlanmaya hazır durumdadır. Depoda bulunan `hf_cli.py` aracı ile model tek komutla yüklenebilir:
 
 ```bash
 # Hugging Face yayınlama komutu:
-python hf_cli.py --repo <kullanici_adi>/primer-v2-adaptive --token <HF_TOKEN>
+python hf_cli.py upload --repo <kullanici_adi>/the-primer-v2
+
+# Gerçek commit hash sorgulama:
+python hf_cli.py commit --repo <kullanici_adi>/the-primer-v2
 ```
 
 **Sürüm Sabitleme (Commit Hash Pinning):**
-Model tüketicisi asla dinamik `main` dalını değil, commit hash ile sabitlenmiş URL'yi kullanır:
+Model tüketicisi asla dinamik `main` dalını değil, commit hash ile sabitlenmiş URL'yi hedefler:
 `https://huggingface.co/<kullanici>/<repo>/resolve/<COMMIT_HASH>/model.onnx`
 
 Ayrıntılı dağıtım, geri alma (rollback), gölge (shadow) ve kanarya (%5) dağıtım planı için: [`RELEASE.md`](RELEASE.md)
 
 ---
 
-## 9. Model ve Veri Kısıtları
+## 10. Mobil Ekran Görüntüleri (Screenshots)
 
-1. **Eğitim Verisi:** Başlangıç modeli 60 sentetik oturum (180 satır) üzerinden bootstrap edilmiştir. Gerçek kullanıcı testleri yapıldıkça `data/oturumlar.csv` dosyasına `kaynak="gercek"` satırları eklenecek ve model periyodik olarak güncellenecektir.
-2. **Kullanım Kapsamı:** Model sadece oyunlaştırılmış kriz simülasyonu içinde pedagojik yönlendirme sağlamak amacıyla tasarlanmıştır; gerçek bir hastane acil durumunda otomatik karar verici olarak kullanılamaz.
-3. **Kullanıcı İradesi:** Model desteğe ihtiyaç olduğunu tahmin etse dahi nihai mühendislik kararı ve desteği reddetme hakkı daima oyuncuya aittir.
+Uygulama Mission-Critical Ops Center tasarım sistemine sahip olup iPhone SE (375x667), iPhone 14/15/16 (390x844) ve Pixel 7 (412x915) boyutlarında sıfır yatay kaydırma ile çalışır:
+
+| Ekran 1 — Kişiselleştirme & Onboarding | Ekran 2 — Kriz Yönetimi & Sokratik Tutor | Ekran 3 — Debrief & Karar Analizi |
+|:---:|:---:|:---:|
+| Giriş anketi, rol seçimi ve anonim veri toplama anahtarı | Kriz adımları, Adaptif Destek kartı ve ML Denetleyicisi | Operasyonel etki, PII durumu ve CSV veri dışa aktarımı |
 
 ---
 
-## 10. Proje Teslim Belgeleri
+## 11. Model, Veri ve Sistem Kısıtları
+
+1. **Eğitim Verisi:** Başlangıç modeli 60 sentetik oturum (180 satır) üzerinden bootstrap edilmiştir (`data/oturumlar.csv`). Gerçek kullanıcı oturumları toplandıkça `kaynak="gercek"` satırları eklenecek ve model periyodik olarak güncellenecektir.
+2. **Kullanım Kapsamı:** Model sadece oyunlaştırılmış kriz simülasyonu içinde pedagojik yönlendirme sağlamak amacıyla tasarlanmıştır; gerçek bir hastane acil durumunda otomatik karar verici olarak kullanılamaz.
+3. **Kullanıcı İradesi:** Model desteğe ihtiyaç olduğunu tahmin etse dahi nihai mühendislik kararı ve desteği reddetme hakkı daima oyuncuya aittir.
+4. **Tek Oturumluk Bellek:** Skorlar ve kararlar oturum bazlı saklanır; tarayıcı tamamen kapatıldığında kriz sıfırlanır.
+
+---
+
+## 12. Proje Teslim Belgeleri
 
 - 📋 **Sistem Spesifikasyonu:** [`spec.md`](spec.md) (v1 temeli + v2 ML spesifikasyonu)
 - 📊 **Veri Sözlüğü:** [`data/SOZLUK.md`](data/SOZLUK.md)
@@ -176,11 +204,12 @@ Ayrıntılı dağıtım, geri alma (rollback), gölge (shadow) ve kanarya (%5) d
 - 🚀 **Dağıtım ve Güvenli Sürüm Planı:** [`RELEASE.md`](RELEASE.md)
 - 📝 **Vize / Sınav Sorusu Tasarımı:** [`SINAV_TASARIMI.md`](SINAV_TASARIMI.md)
 - 🎬 **Demo Video Senaryosu (75 sn):** [`DEMO_SENARYOSU.md`](DEMO_SENARYOSU.md)
-- 🤖 **Google AI Studio Konfigürasyonu:** [`ai-studio/prompt-config.json`](ai-studio/prompt-config.json)
+- 🧪 **AI Tutor Değerlendirme Kılavuzu:** [`eval/labeling-guide.md`](eval/labeling-guide.md) ve [`eval/results.md`](eval/results.md)
+- ⚙️ **Sokratik Senaryo ve İpuçları:** [`src/scenario/data.ts`](src/scenario/data.ts) ve [`api/tutor.ts`](api/tutor.ts)
 
 ---
 
-## 11. AI Kullanım Beyanı
+## 13. AI Kullanım Beyanı
 
 The Primer v2 projesinin geliştirilmesinde Google Antigravity yapay zeka kodlama asistanından aşağıdaki kapsamda faydalanılmıştır:
 
