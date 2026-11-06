@@ -5,6 +5,7 @@
 [![Model Eval](https://img.shields.io/badge/Model%20F1-0.8636%20(%3E=0.70)-purple?style=flat-square)](model/config.json)
 [![Differential Parity](https://img.shields.io/badge/Parity%20Tolerance-%3C1e--4%20Verified-success?style=flat-square)](tests/parite.json)
 [![Tutor Evaluation](https://img.shields.io/badge/Tutor%20Eval-20%20Cases%20Etiketlendi-8b5cf6?style=flat-square)](eval/results.md)
+[![Hugging Face Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-blny66%2Fthe--primer--v2-yellow?style=flat-square)](https://huggingface.co/blny66/the-primer-v2)
 [![Live Demo](https://img.shields.io/badge/Vercel-Canl%C4%B1%20Yay%C4%B1n-black?style=flat-square&logo=vercel)](https://flying-iron-c566m6c.tmp.now)
 [![YouTube Demo](https://img.shields.io/badge/YouTube-Demo%20Video-red?style=flat-square&logo=youtube)](https://youtu.be/quWFpJckWok)
 [![GitHub](https://img.shields.io/badge/GitHub-belinaydikmen3%2FSE--Primer-blue?style=flat-square&logo=github)](https://github.com/belinaydikmen3/SE-Primer)
@@ -19,6 +20,7 @@ The Primer v2; yazılım mühendisliği kararlarını (Mimari Rollback, Test/Da�
 ## 1. Hızlı Bağlantılar ve Teslim Bilgileri
 
 - 🌐 **Canlı Uygulama (Vercel):** [https://flying-iron-c566m6c.tmp.now](https://flying-iron-c566m6c.tmp.now)
+- 🤗 **Hugging Face Model Deposu:** [https://huggingface.co/blny66/the-primer-v2](https://huggingface.co/blny66/the-primer-v2)
 - 🎬 **YouTube Demo Videosu:** [https://youtu.be/quWFpJckWok](https://youtu.be/quWFpJckWok)
 - 💻 **GitHub Deposu:** [https://github.com/belinaydikmen3/SE-Primer](https://github.com/belinaydikmen3/SE-Primer)
 - 📋 **Sistem Spesifikasyonu:** [`spec.md`](spec.md)
@@ -159,19 +161,22 @@ npm run test:e2e
 
 ## 9. Hugging Face Model Yayınlama ve Sürüm Sabitleme
 
-Model dosyaları (`model/model.onnx`, `model/config.json`, `model/README.md`), Hugging Face Hub üzerinde sürümlü bir model deposunda yayınlanmaya hazır durumdadır. Depoda bulunan `hf_cli.py` aracı ile model tek komutla yüklenebilir:
+Model dosyaları (`model/model.onnx`, `model/config.json`, `model/README.md`), Hugging Face Hub üzerinde herkese açık ve sürümlü bir model deposunda yayınlanmıştır:
+
+- **Hugging Face Model Deposu:** [https://huggingface.co/blny66/the-primer-v2](https://huggingface.co/blny66/the-primer-v2)
+- **Doğrulanmış Commit Hash:** `c9118676b7c410e948b73155e10e22b43561def9`
 
 ```bash
-# Hugging Face yayınlama komutu:
-python hf_cli.py upload --repo <kullanici_adi>/the-primer-v2
-
-# Gerçek commit hash sorgulama:
-python hf_cli.py commit --repo <kullanici_adi>/the-primer-v2
+# Model yayınlama komutu:
+python hf_cli.py --repo blny66/the-primer-v2 --token <HF_TOKEN>
 ```
 
 **Sürüm Sabitleme (Commit Hash Pinning):**
 Model tüketicisi asla dinamik `main` dalını değil, commit hash ile sabitlenmiş URL'yi hedefler:
-`https://huggingface.co/<kullanici>/<repo>/resolve/<COMMIT_HASH>/model.onnx`
+- **Sabitlenmiş ONNX Modeli:**
+  `https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/model.onnx`
+- **Sabitlenmiş Model Sözleşmesi:**
+  `https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/config.json`
 
 Ayrıntılı dağıtım, geri alma (rollback), gölge (shadow) ve kanarya (%5) dağıtım planı için: [`RELEASE.md`](RELEASE.md)
 

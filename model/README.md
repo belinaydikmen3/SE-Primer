@@ -3,6 +3,8 @@
 ## 1. Model Özeti
 - **Model Adı:** The Primer Adaptive Socratic Assistant
 - **Sürüm:** v2.0
+- **Hugging Face Hub:** [`blny66/the-primer-v2`](https://huggingface.co/blny66/the-primer-v2)
+- **Doğrulanmış Commit Hash:** `c9118676b7c410e948b73155e10e22b43561def9`
 - **Model Türü:** Açıklanabilir Karar Ağacı (`DecisionTreeClassifier(max_depth=3)`)
 - **Format:** ONNX (`model.onnx`, ZipMap=False)
 - **Hedef Değişken:** `destek_gerekli` (0: Normal akış, 1: Kişiselleştirilmiş AI Tutor desteği gerekli)

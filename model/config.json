@@ -67,6 +67,12 @@
     "train_sample_count": 135,
     "max_prob_diff_onnx_sklearn": 8.514949245697068e-09
   },
+  "huggingface": {
+    "repo": "blny66/the-primer-v2",
+    "commit_hash": "c9118676b7c410e948b73155e10e22b43561def9",
+    "model_url": "https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/model.onnx",
+    "config_url": "https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/config.json"
+  },
   "preprocessing": {
     "normalization": "none",
     "notes": "Decision Tree ağaç kuralları girdi ölçeğine duyarlı olmadığından doğrudan ham float32 değerleri işlenmektedir."

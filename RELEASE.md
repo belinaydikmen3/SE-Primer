@@ -22,13 +22,15 @@ Bu doküman, **The Primer v1** ile **The Primer v2** arasındaki mimari farklar�
 ## 2. Model Sürümü ve Commit Hash Sabitleme
 
 - **Mevcut Model Sürümü:** `v2.0`
+- **Hugging Face Model Deposu:** [`blny66/the-primer-v2`](https://huggingface.co/blny66/the-primer-v2)
+- **Doğrulanmış Commit Hash:** `c9118676b7c410e948b73155e10e22b43561def9`
 - **Sözleşme Dosyaları:** `model/model.onnx`, `model/config.json`, `model/README.md`
 - **Dağıtım Kuralı (Immutability):**
   Model istemcisi (browser runtime) asla `main` veya `latest` gibi hareketli (mutable) dalları hedeflemez. Model ve konfigürasyon dosyaları **tam commit hash** ile sabitlenmiş URL üzerinden çekilir:
 
 ```text
-https://huggingface.co/<kullanici>/<repo>/resolve/<COMMIT_HASH>/model.onnx
-https://huggingface.co/<kullanici>/<repo>/resolve/<COMMIT_HASH>/config.json
+https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/model.onnx
+https://huggingface.co/blny66/the-primer-v2/resolve/c9118676b7c410e948b73155e10e22b43561def9/config.json
 ```
 
 Bu yöntem, üretim ortamında istemcilerin farklı zamanlarda farklı model ağırlıklarını yüklemesini (model drift / cache poisoning) kesin olarak engeller.
