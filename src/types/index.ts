@@ -30,6 +30,7 @@ export interface DecisionStep {
   headline: string;
   contextText: string;
   hintText: string;
+  difficulty: number; // 0.0 - 1.0
   logSnippet?: string;
   options: {
     A: DecisionOption;
@@ -70,6 +71,51 @@ export interface TutorMessage {
   isFallback?: boolean;
 }
 
+export interface BehavioralMetrics {
+  karar_suresi_sn: number;
+  karar_degistirme_sayisi: number;
+  onceki_basarisiz_karar_sayisi: number;
+  ortalama_karar_suresi_sn: number;
+  sahne_zorlugu: number;
+  yardim_kullanim_sayisi: number;
+  oyuncu_deneyim_seviyesi: number;
+  sahne_ilerleme_orani: number;
+}
+
+export interface ModelPrediction {
+  probability: number;
+  predictedLabel: 0 | 1;
+  isSupportNeeded: boolean;
+  isLoaded: boolean;
+  isEvaluating: boolean;
+  modelVersion: string;
+  error: string | null;
+  source: 'onnx' | 'fallback';
+}
+
+export interface DataCollectionRecord {
+  oturum_id: string;
+  sahne_id: DecisionId;
+  karar_suresi_sn: number;
+  karar_degistirme_sayisi: number;
+  onceki_basarisiz_karar_sayisi: number;
+  ortalama_karar_suresi_sn: number;
+  sahne_zorlugu: number;
+  yardim_kullanim_sayisi: number;
+  oyuncu_deneyim_seviyesi: number;
+  sahne_ilerleme_orani: number;
+  destek_gerekli: number;
+  kaynak: 'gercek' | 'sentetik';
+  timestamp: string;
+}
+
+export interface AdaptiveState {
+  isPromptOffered: boolean;
+  isDismissed: boolean;
+  isAccepted: boolean;
+  extendedTimeGiven: boolean;
+}
+
 export interface GameState {
   currentScreen: 'onboarding' | 'crisis' | 'debrief';
   profile: UserProfile;
@@ -85,4 +131,17 @@ export interface GameState {
   isTutorLoading: boolean;
   activeHintVisible: boolean;
   outcome: OutcomeDetail | null;
+
+  // The Primer v2 additions
+  sessionId: string;
+  dataCollectionEnabled: boolean;
+  collectedRecords: DataCollectionRecord[];
+  latestPrediction: ModelPrediction | null;
+  adaptiveState: AdaptiveState;
+  activeDecisionChanges: number;
+  selectedChoicePreview: ChoiceId | null;
+  stepStartTime: number;
+  sessionDecisionTimes: number[];
+  helpInteractionsCount: number;
+  showDevPanel: boolean;
 }

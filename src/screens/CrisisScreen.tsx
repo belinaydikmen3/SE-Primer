@@ -1,13 +1,16 @@
 import React from 'react';
 import type {
+  AdaptiveState,
   ChoiceId,
   DecisionStep,
+  ModelPrediction,
   TutorMessage,
   UserProfile,
 } from '../types';
 import { HintCard } from '../components/HintCard';
 import { TutorPanel } from '../components/TutorPanel';
 import { CauseEffectModal } from '../components/CauseEffectModal';
+import { AdaptivePromptCard } from '../components/AdaptivePromptCard';
 import { getGoalHighlight, getRolePerspective } from '../scenario/data';
 
 interface CrisisScreenProps {
@@ -26,6 +29,12 @@ interface CrisisScreenProps {
   apiKey?: string;
   onApiKeyChange?: (key: string) => void;
   isTimerExpired?: boolean;
+
+  // The Primer v2 props
+  latestPrediction: ModelPrediction | null;
+  adaptiveState: AdaptiveState;
+  onAcceptAdaptive: () => void;
+  onDismissAdaptive: () => void;
 }
 
 export const CrisisScreen: React.FC<CrisisScreenProps> = ({
@@ -44,6 +53,10 @@ export const CrisisScreen: React.FC<CrisisScreenProps> = ({
   apiKey,
   onApiKeyChange,
   isTimerExpired,
+  latestPrediction,
+  adaptiveState,
+  onAcceptAdaptive,
+  onDismissAdaptive,
 }) => {
   const chosenOption = selectedChoice ? step.options[selectedChoice] : null;
 
@@ -89,6 +102,15 @@ export const CrisisScreen: React.FC<CrisisScreenProps> = ({
             <strong>Süre Doldu (60s):</strong> Karar süresi tükendi! Kriz operasyonunda varsayılan mühendislik kararı işleniyor.
           </span>
         </div>
+      )}
+
+      {/* v2 Makine Öğrenmesi Adaptif AI Desteği Kartı */}
+      {adaptiveState.isPromptOffered && !adaptiveState.isDismissed && (
+        <AdaptivePromptCard
+          prediction={latestPrediction}
+          onAccept={onAcceptAdaptive}
+          onDismiss={onDismissAdaptive}
+        />
       )}
 
       {/* Karar Başlığı ve Bağlam */}

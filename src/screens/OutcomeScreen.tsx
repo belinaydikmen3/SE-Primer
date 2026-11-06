@@ -1,11 +1,13 @@
 import React from 'react';
-import type { ChoiceId, DecisionId, OutcomeDetail, UserProfile } from '../types';
+import type { ChoiceId, DataCollectionRecord, DecisionId, OutcomeDetail, UserProfile } from '../types';
 import { DECISION_STEPS } from '../scenario/data';
+import { exportRecordsToCsv } from '../engine/gameEngine';
 
 interface OutcomeScreenProps {
   outcome: OutcomeDetail;
   choices: Partial<Record<DecisionId, ChoiceId>>;
   profile: UserProfile;
+  collectedRecords: DataCollectionRecord[];
   onRestart: () => void;
 }
 
@@ -13,9 +15,23 @@ export const OutcomeScreen: React.FC<OutcomeScreenProps> = ({
   outcome,
   choices,
   profile,
+  collectedRecords,
   onRestart,
 }) => {
   const isSuccess = outcome.type === 'outcome_a';
+
+  const handleDownloadCsv = () => {
+    if (collectedRecords.length === 0) return;
+    const csvContent = exportRecordsToCsv(collectedRecords);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `primer_oturum_${collectedRecords[0]?.oturum_id || 'kayit'}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="screen-container" data-cy="outcome-screen">
@@ -139,6 +155,28 @@ export const OutcomeScreen: React.FC<OutcomeScreenProps> = ({
         </strong>
         <div>{outcome.recommendation}</div>
       </div>
+
+      {/* v2 Anonim Veri Dışa Aktarma Butonu */}
+      {collectedRecords.length > 0 && (
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={handleDownloadCsv}
+          data-cy="export-csv-btn"
+          style={{
+            marginTop: '4px',
+            borderColor: 'rgba(139, 92, 246, 0.4)',
+            color: '#c4b5fd',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          <span>📥</span>
+          <span>Anonim Oturum Verisini Dışa Aktar (CSV - {collectedRecords.length} Karar)</span>
+        </button>
+      )}
 
       {/* Yeniden Başlat CTA */}
       <button

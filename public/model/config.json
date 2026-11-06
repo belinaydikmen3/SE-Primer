@@ -1,0 +1,74 @@
+{
+  "model_name": "The Primer Adaptive Socratic Assistant",
+  "model_version": "v2.0",
+  "architecture": "DecisionTreeClassifier",
+  "max_depth": 3,
+  "purpose": "Oyuncunun mevcut kriz sahnesinde zorlandığını ve kişiselleştirilmiş AI tutor desteğine ihtiyaç duyup duymadığını tahmin etmek.",
+  "features": [
+    "karar_suresi_sn",
+    "karar_degistirme_sayisi",
+    "onceki_basarisiz_karar_sayisi",
+    "ortalama_karar_suresi_sn",
+    "sahne_zorlugu",
+    "yardim_kullanim_sayisi",
+    "oyuncu_deneyim_seviyesi",
+    "sahne_ilerleme_orani"
+  ],
+  "feature_count": 8,
+  "data_types": {
+    "karar_suresi_sn": "float32",
+    "karar_degistirme_sayisi": "float32",
+    "onceki_basarisiz_karar_sayisi": "float32",
+    "ortalama_karar_suresi_sn": "float32",
+    "sahne_zorlugu": "float32",
+    "yardim_kullanim_sayisi": "float32",
+    "oyuncu_deneyim_seviyesi": "float32",
+    "sahne_ilerleme_orani": "float32"
+  },
+  "classes": [
+    0,
+    1
+  ],
+  "positive_class": 1,
+  "positive_class_meaning": "Destek Gerekli (Oyuncu Zorlanıyor)",
+  "acceptance_threshold": 0.7,
+  "decision_threshold": 0.5,
+  "random_state": 42,
+  "contract": {
+    "input_name": "float_input",
+    "input_shape": [
+      1,
+      8
+    ],
+    "input_type": "tensor(float)",
+    "output_names": [
+      "label",
+      "probabilities"
+    ],
+    "probability_output_name": "probabilities",
+    "probability_index": 1
+  },
+  "metrics": {
+    "f1_score": 0.8636,
+    "precision": 1.0,
+    "recall": 0.76,
+    "accuracy": 0.8667,
+    "confusion_matrix": [
+      [
+        20,
+        0
+      ],
+      [
+        6,
+        19
+      ]
+    ],
+    "test_sample_count": 45,
+    "train_sample_count": 135,
+    "max_prob_diff_onnx_sklearn": 8.514949245697068e-09
+  },
+  "preprocessing": {
+    "normalization": "none",
+    "notes": "Decision Tree ağaç kuralları girdi ölçeğine duyarlı olmadığından doğrudan ham float32 değerleri işlenmektedir."
+  }
+}

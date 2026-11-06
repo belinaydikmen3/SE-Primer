@@ -270,3 +270,104 @@ stateDiagram-v2
 | **M-04** | Tutor'ın cevabı ele verme oranı (`reveals_answer == true`) değerlendirme setinde <%10 olmalıdır. | `eval/results.md` raporu |
 | **M-05** | Son A ve Son B durumlarına oyun mantığı kuralları eksiksiz işletilerek deterministik olarak ulaşılabilir. | Birim ve E2E testleri |
 | **M-06** | 60 saniyelik video senaryosu ve Türkçe seslendirme metni eksiksiz hazırlanmıştır. | `docs/demo-script.md` |
+
+
+---
+
+# BÖLÜM II: THE PRIMER v2 — MAKİNE ÖĞRENMESİ VE DAVRANIŞSAL KİŞİSELLEŞTİRME SPESİFİKASYONU
+
+## 13. The Primer v2'nin Yeni Amacı ve Makine Öğrenmesi Mimarisi
+
+The Primer v1 sürümünde kişiselleştirme, yalnızca açılışta sorulan 3 statik anket sorusuna (Deneyim, Rol, Hedef) dayalı deterministik kurallarla işletiliyordu.
+
+**The Primer v2**, oyuncunun kriz sahnelerindeki **gerçek zamanlı davranışsal tepkilerini** ölçümleyerek çalışan bir makine öğrenmesi modeli (ONNX Tabular Inference) ile zenginleştirilmiştir.
+
+### 13.1 Özgün Model Hedefi
+> **"Oyuncunun mevcut kriz sahnesinde zorlandığını ve kişiselleştirilmiş AI Tutor desteğine ihtiyaç duyup duymadığını tahmin etmek."**
+
+Modelin çıktısı pasif bir istatistik değil, doğrudan oyun mekaniğini dinamik olarak uyarlayan aktif bir tetikleyicidir.
+
+---
+
+## 14. Davranışsal Girdi Özellikleri (Features) ve Sıralama Sözleşmesi
+
+Model, veri sızıntısını (data leakage) engellemek amacıyla yalnızca kararın verildiği ana kadar gözlemlenebilir olan aşağıdaki 8 özniteliği kesin sırada kabul eder:
+
+| No | Özellik Adı | Tip | Ölçüm / Mantık | Sızıntı Kontrolü |
+|:---:|---|:---:|---|---|
+| 1 | `karar_suresi_sn` | float32 | Sahnenin açılışından seçime kadar geçen süre (saniye) | Sadece o anki sahne süresi kullanılır. Gelecek adımları içermez. |
+| 2 | `karar_degistirme_sayisi` | float32 | Karar onayından önce şıklar arasında geçiş/tereddüt sayısı | O anki sahnedeki tıklama geçmişidir. |
+| 3 | `onceki_basarisiz_karar_sayisi` | float32 | Önceki adımlarda yapılan riskli/başarısız seçim sayısı | Yalnızca geçmiş tamamlanmış adımları sayar. |
+| 4 | `ortalama_karar_suresi_sn` | float32 | Oturumdaki önceki kararların ortalama süresi (sn) | Yalnızca geçmiş ortalamadır. |
+| 5 | `sahne_zorlugu` | float32 | Sahnenin kavramsal zorluk katsayısı (`arch: 0.70`, `test: 0.50`, `privacy: 0.80`) | Önceden sabit tanımlı alan uzmanı metriğidir. |
+| 6 | `yardim_kullanim_sayisi` | float32 | Oturumda o ana kadar açılan ipucu ve sorulan Tutor soru sayısı | Geçmiş kümülatif yardım talebidir. |
+| 7 | `oyuncu_deneyim_seviyesi` | float32 | Onboarding seviyesi (`junior: 0`, `mid: 1`, `senior: 2`) | Girişte belirlenen başlangıç durumudur. |
+| 8 | `sahne_ilerleme_orani` | float32 | Hikayedeki ilerleme konumu (`0.33`, `0.67`, `1.00`) | Aktif adımın toplam adıma oranıdır. |
+
+---
+
+## 15. Hedef Değişken ve Etiketleme Metodolojisi
+
+- **Hedef Değişken:** `destek_gerekli` $\in \{0, 1\}$
+  - `0`: Normal akış. Oyuncu sahneyi güvenle yönetiyor.
+  - `1`: Destek gerekli. Oyuncu karar vermekte bocalıyor veya zorlanıyor.
+
+### 15.1 Denetlenebilir Etiketleme Kuralı
+1. `karar_suresi_sn > 35.0` sn **VEYA**
+2. `karar_degistirme_sayisi >= 2` **VEYA**
+3. `onceki_basarisiz_karar_sayisi >= 1` VE `karar_suresi_sn > 25.0` sn **VEYA**
+4. `oyuncu_deneyim_seviyesi == 0` (Junior) VE `sahne_zorlugu >= 0.70` VE `yardim_kullanim_sayisi == 0` VE `karar_suresi_sn > 20.0` sn.
+
+---
+
+## 16. Veri Toplama Sistemi (Data Collection Mode)
+
+1. **`data/oturumlar.csv` Dosya Yapısı:**
+   `oturum_id,sahne_id,karar_suresi_sn,karar_degistirme_sayisi,onceki_basarisiz_karar_sayisi,ortalama_karar_suresi_sn,sahne_zorlugu,yardim_kullanim_sayisi,oyuncu_deneyim_seviyesi,sahne_ilerleme_orani,destek_gerekli,kaynak`
+2. **Kullanıcı Onayı & Gizlilik:**
+   - Onboarding ekranında "Anonim Veri Toplama Modu" açıkça belirtilir.
+   - Ad, e-posta, IP, kesin konum, cihaz kimliği toplanmaz.
+   - Oturum kimliği rastgele üretilir (`crypto.randomUUID()`).
+   - `gercek` ve `sentetik` veriler `kaynak` sütunuyla ayrılır.
+   - Oturum sonunda CSV indirme butonu (`data-cy="export-csv-btn"`) sunulur.
+
+---
+
+## 17. Model Değerlendirme Metriği ve Kabul Eşiği Gerekçesi
+
+- **Birincil Metrik:** **F1-Score (Macro / Binary Positive Class)**
+- **Eğitim Öncesi Tanımlanmış Kabul Eşiği:** $\text{F1} \ge 0.70$
+- **Eşik Tercih Gerekçesi:**
+  Eğitim veri kümesi tabular ve dengeli dağılımlıdır (%49 pozitif, %51 negatif). Yalnızca `accuracy` metriği yanıltıcı olabileceğinden, hem Yanlış Pozitifleri (gereksiz yere oyuncunun dikkatini dağıtan destek mesajları) hem de Yanlış Negatifleri (zorlanan öğrenciye yardım ulaştıramama) cezalandıran harmonik ortalama F1-Score seçilmiştir. 0.70 eşiği, kriz simülasyonlarında pedagojik faydayı garantiye alırken rahatsız edici yanlış alarmları sınırlar.
+- **Eşik Barajı Kuralı:** `train.py` koşturulduğunda test F1 skoru $0.70$'in altında kalırsa işlem `sys.exit(1)` ile durdurulur ve model yayınlanmaz.
+
+---
+
+## 18. Modelin Oyun Davranışına Somut Etkileri
+
+Model $p \ge 0.50$ (`destek_gerekli == 1`) tahmin ettiğinde:
+1. **Nazik Sokratik Destek Kartı (`AdaptivePromptCard`):**
+   *"Primer, bu kriz adımında karar verirken biraz zorlandığını fark etti. İstersen birlikte düşünelim; acele etmene gerek yok."*
+2. **Süre Baskısının Azaltılması:**
+   Senior modda geri sayım sayacı 30 saniyenin altındaysa kullanıcıya panik yapmaması için anında $+30$ saniye ek kriz süresi tanımlanır.
+3. **Seçim Özgürlüğü (Opt-out):**
+   Kullanıcı dilerse *"💡 Birlikte Düşünelim (İpucunu Aç)"* diyerek desteği kabul eder; dilerse *"Teşekkürler, Kendim Devam Edeceğim"* diyerek desteği kapatır ve kendi seçimiyle devam eder.
+
+---
+
+## 19. The Primer v2 İçin Üç Yeni Somut Kabul Senaryosu
+
+### Kabul Örneği 6 (v2-01): Zorlanan Oyuncuya Modelin Proaktif Destek Önermesi
+- **Given:** Oyuncu Karar 1 (Mimari) aşamasındadır ve 40 saniyeden uzun süredir seçim yapmamış, seçenekler arasında kararsız kalmıştır.
+- **When:** Arka plandaki `onnxruntime-web` çıkarım motoru $p > 0.50$ (`destek_gerekli = 1`) olasılığını hesapladığında,
+- **Then:** Ekranda `[data-cy="adaptive-prompt-card"]` belirmeli, kullanıcıya nazikçe birlikte düşünme teklif edilmeli ve kullanıcı kabul ettiğinde mimari ipucu otomatik olarak açılmalıdır.
+
+### Kabul Örneği 7 (v2-02): Kendinden Emin Oyuncuda Normal Akışın Kesintisiz Sürmesi
+- **Given:** Oyuncu Deneyimli seviyededir, 12 saniye içinde tereddüt etmeden kararını netleştirmiştir.
+- **When:** Model çıkarımı çalıştığında pozitif sınıf olasılığı $p < 0.50$ olarak hesaplanırsa,
+- **Then:** Hiçbir rahatsız edici modal veya uyarı açılmamalı, `[data-cy="adaptive-prompt-card"]` DOM'a eklenmemeli ve kriz akışı normal editoryal temposunda sürmelidir.
+
+### Kabul Örneği 8 (v2-03): Python Oracle ile Tarayıcı ONNX Diferansiyel Parite Toleransı
+- **Given:** `tests/parite.json` dosyasında Python `onnxruntime` ile hesaplanmış en az 5 adet referans girdi vektörü ve olasılıkları bulunmaktadır.
+- **When:** Cypress diferansiyel testi `[data-cy="dev-inspector-modal"]` üzerinden bu vektörleri tarayıcıdaki `onnxruntime-web` oturumuna verdiğinde,
+- **Then:** Her bir referans girdi için ekrandaki `[data-cy="p"]` değeri ile Python değeri arasındaki mutlak fark $|p_{\text{python}} - p_{\text{browser}}| < 10^{-4}$ olmalıdır.

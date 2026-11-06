@@ -3,13 +3,19 @@ import type { ExperienceLevel, LearningGoal, Role, UserProfile } from '../types'
 
 interface OnboardingScreenProps {
   profile: UserProfile;
+  sessionId: string;
+  dataCollectionEnabled: boolean;
   onProfileChange: (updated: UserProfile) => void;
+  onToggleDataCollection: (enabled: boolean) => void;
   onStartCrisis: () => void;
 }
 
 export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   profile,
+  sessionId,
+  dataCollectionEnabled,
   onProfileChange,
+  onToggleDataCollection,
   onStartCrisis,
 }) => {
   const setLevel = (level: ExperienceLevel) => onProfileChange({ ...profile, level });
@@ -19,6 +25,15 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
   return (
     <div className="screen-container" data-cy="onboarding-screen">
       <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+          <span
+            className="brand-badge"
+            style={{ background: 'rgba(139, 92, 246, 0.2)', color: '#c4b5fd', borderColor: '#8b5cf6' }}
+            data-cy="onboarding-v2-badge"
+          >
+            The Primer v2 · ML Kişiselleştirme
+          </span>
+        </div>
         <h1 className="title-lg" style={{ marginBottom: '6px' }}>
           08:00 Krizine Hazır mısın?
         </h1>
@@ -166,6 +181,40 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({
             <div className="chip-desc">Kişisel sağlık verilerinin korunması ve log maskeleme kuralları.</div>
           </button>
         </div>
+      </div>
+
+      {/* Veri Toplama Modu ve Kullanıcı Onayı */}
+      <div
+        className="card"
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          border: '1px dashed var(--color-border-subtle)',
+          padding: '10px 14px',
+        }}
+        data-cy="data-collection-card"
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
+              📊 Anonim Veri Toplama Modu (KVKK Uyumlu)
+            </span>
+            <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
+              Oturum No: <code data-cy="session-id-display">{sessionId}</code> — Sıfır kişisel veri (PII).
+            </div>
+          </div>
+          <button
+            type="button"
+            className={`chip-btn ${dataCollectionEnabled ? 'selected' : ''}`}
+            style={{ width: 'auto', padding: '4px 10px', minHeight: '30px' }}
+            onClick={() => onToggleDataCollection(!dataCollectionEnabled)}
+            data-cy="data-collection-toggle"
+          >
+            {dataCollectionEnabled ? '✓ Açık' : 'Kapalı'}
+          </button>
+        </div>
+        <p style={{ fontSize: '10px', color: 'var(--color-text-muted)', marginTop: '6px' }}>
+          * Karar süreleriniz ve seçim değişiklikleriniz yapay zeka modelini geliştirmek için anonim kaydedilir. Oturum sonunda CSV olarak dışa aktarabilirsiniz.
+        </p>
       </div>
 
       <button

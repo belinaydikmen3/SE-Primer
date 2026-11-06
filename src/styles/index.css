@@ -63,6 +63,7 @@ body {
   flex-direction: column;
   position: relative;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+  overflow-x: hidden;
 }
 
 /* Scrollbar */
@@ -87,7 +88,7 @@ select:focus-visible {
 
 /* Header */
 .app-header {
-  padding: 12px 16px;
+  padding: 10px 12px;
   background: rgba(19, 27, 43, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border-subtle);
@@ -97,50 +98,58 @@ select:focus-visible {
   position: sticky;
   top: 0;
   z-index: 40;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .brand-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   color: var(--color-text-primary);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .brand-badge {
-  font-size: 10px;
+  font-size: 9px;
   font-family: var(--font-family-mono);
   background: rgba(59, 130, 246, 0.15);
   color: var(--color-accent-blue);
-  padding: 2px 6px;
+  padding: 1px 5px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(59, 130, 246, 0.3);
+  white-space: nowrap;
 }
 
 .header-status {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .status-chip {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
+  gap: 4px;
+  font-size: 10px;
   font-family: var(--font-family-mono);
   background: var(--color-bg-elevated);
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
 }
 
 .status-chip.warning {
@@ -671,4 +680,152 @@ select:focus-visible {
 .review-justification {
   font-size: 12px;
   color: var(--color-text-secondary);
+}
+
+
+/* The Primer v2 — Adaptive Prompt & Dev Inspector Styles */
+.adaptive-prompt-card {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.adaptive-prompt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adaptive-pulse-icon {
+  display: inline-block;
+  animation: pulseScale 2s infinite ease-in-out;
+}
+
+@keyframes pulseScale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.adaptive-prompt-text {
+  font-size: 13px;
+  color: #ddd6fe;
+  line-height: 1.45;
+}
+
+.adaptive-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* Dev Modal */
+.dev-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.dev-modal-content {
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.dev-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: 12px;
+}
+
+.dev-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.dev-metric-item {
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dev-metric-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.dev-metric-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.dev-features-table {
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dev-feature-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.dev-feat-name {
+  color: var(--color-text-secondary);
+}
+
+.dev-feat-val {
+  font-family: var(--font-family-mono);
+  color: #38bdf8;
+  font-weight: 600;
 }

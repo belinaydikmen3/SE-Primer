@@ -7,6 +7,8 @@ interface HeaderProps {
   timeRemaining: number;
   isTimerRunning: boolean;
   stepNumber?: number;
+  onToggleDevPanel?: () => void;
+  predictionProbability?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,13 +17,26 @@ export const Header: React.FC<HeaderProps> = ({
   timeRemaining,
   isTimerRunning,
   stepNumber,
+  onToggleDevPanel,
+  predictionProbability,
 }) => {
   return (
     <header className="app-header" data-cy="app-header">
       <div className="brand-wrapper">
         <span className="brand-title">
-          SE PRIMER
-          <span className="brand-badge">YZM301</span>
+          SE PRIMER <span style={{ color: 'var(--color-accent-violet)', fontSize: '12px' }}>v2</span>
+          <span
+            className="brand-badge"
+            style={{
+              background: 'rgba(139, 92, 246, 0.15)',
+              color: '#c4b5fd',
+              borderColor: 'rgba(139, 92, 246, 0.3)',
+              marginLeft: '2px',
+            }}
+            data-cy="header-v2-badge"
+          >
+            ML
+          </span>
         </span>
       </div>
 
@@ -56,6 +71,28 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="status-chip" data-cy="header-debrief-badge">
             Sonuç Raporu
           </span>
+        )}
+
+        {onToggleDevPanel && (
+          <button
+            type="button"
+            className="btn-secondary"
+            style={{
+              width: 'auto',
+              minHeight: '24px',
+              padding: '1px 6px',
+              fontSize: '11px',
+              background: 'rgba(139, 92, 246, 0.12)',
+              borderColor: 'rgba(139, 92, 246, 0.35)',
+              color: '#c4b5fd',
+              whiteSpace: 'nowrap',
+            }}
+            onClick={onToggleDevPanel}
+            title={`ML Model ve Diferansiyel Parite Denetleyicisini Aç${predictionProbability !== undefined ? ` (p=${predictionProbability.toFixed(2)})` : ''}`}
+            data-cy="dev-panel-toggle"
+          >
+            ⚙️ ML
+          </button>
         )}
       </div>
     </header>

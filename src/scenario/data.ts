@@ -12,6 +12,7 @@ export const DECISION_STEPS: DecisionStep[] = [
       'Hastanede 300 hasta poliklinik önlerinde kayıt açtırmayı bekliyor. Dün gece 02:00\'de yayımlanan v2.4.0 sürümü sonrası veritabanı bağlantı havuzu (connection pool) tükendi ve API servisleri 500 hatası üretmeye başladı.',
     hintText:
       'Mimari İpucu: Üretim krizinde öncelik servisi bilinen en son stabil duruma çekmektir. Ancak geri dönmeden önce gece yapılan sürümde geriye dönük uyumsuz (breaking) veritabanı şema değişikliği olup olmadığı muhakkak kontrol edilmelidir.',
+    difficulty: 0.7,
     options: {
       A: {
         id: 'A',
@@ -48,6 +49,7 @@ export const DECISION_STEPS: DecisionStep[] = [
       'Sürüm müdahalesi tamamlandı. Ancak ön uç randevu alma akışının ve kimlik doğrulama servisinin kusursuz çalıştığından emin olunması gerekiyor. 300 hasta kuyrukta sabırsızlanıyor.',
     hintText:
       'Kalite İpucu: Kriz anında tüm regresyon paketini (2 saat) çalıştırmak imkansızdır. Fakat kritik hasta akışını doğrulayan 10-15 dakikalık odaklı duman testleri (smoke/sanity suite) büyük felaketleri önler.',
+    difficulty: 0.5,
     options: {
       A: {
         id: 'A',
@@ -86,6 +88,7 @@ export const DECISION_STEPS: DecisionStep[] = [
       '[ERROR] 08:04:12 - PatientID: 88412 | Name: Ahmet Yılmaz | TC: 12345678901 | Diagnostic: Akut Pankreatit | Err: Connection pool exhausted',
     hintText:
       'Gizlilik İpucu: 6698 sayılı KVKK m.4 uyarınca veriler işlendikleri amaçla bağlantılı, sınırlı ve ölçülü olmalıdır. Sağlık verileri özel nitelikli kişisel veridir. Log paylaşırken PII maskeleme zorunludur.',
+    difficulty: 0.8,
     options: {
       A: {
         id: 'A',

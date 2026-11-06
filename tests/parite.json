@@ -1,0 +1,196 @@
+{
+  "model_version": "v2.0",
+  "feature_order": [
+    "karar_suresi_sn",
+    "karar_degistirme_sayisi",
+    "onceki_basarisiz_karar_sayisi",
+    "ortalama_karar_suresi_sn",
+    "sahne_zorlugu",
+    "yardim_kullanim_sayisi",
+    "oyuncu_deneyim_seviyesi",
+    "sahne_ilerleme_orani"
+  ],
+  "cases": [
+    {
+      "id": "case_1_junior_struggling",
+      "description": "Zorlanan Junior: Uzun karar süresi (45s), 3 kez şık değiştirmiş, yardım almamış",
+      "features": {
+        "karar_suresi_sn": 45.0,
+        "karar_degistirme_sayisi": 3.0,
+        "onceki_basarisiz_karar_sayisi": 0.0,
+        "ortalama_karar_suresi_sn": 45.0,
+        "sahne_zorlugu": 0.7,
+        "yardim_kullanim_sayisi": 0.0,
+        "oyuncu_deneyim_seviyesi": 0.0,
+        "sahne_ilerleme_orani": 0.33
+      },
+      "vector": [
+        45.0,
+        3.0,
+        0.0,
+        45.0,
+        0.7,
+        0.0,
+        0.0,
+        0.33
+      ],
+      "predicted_label": 1,
+      "positive_probability": 1.0,
+      "probabilities": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "case_2_senior_fluent",
+      "description": "Seri Karar Veren Senior: Hızlı karar (12s), tereddütsüz, önceki hata yok",
+      "features": {
+        "karar_suresi_sn": 12.0,
+        "karar_degistirme_sayisi": 0.0,
+        "onceki_basarisiz_karar_sayisi": 0.0,
+        "ortalama_karar_suresi_sn": 12.0,
+        "sahne_zorlugu": 0.7,
+        "yardim_kullanim_sayisi": 0.0,
+        "oyuncu_deneyim_seviyesi": 2.0,
+        "sahne_ilerleme_orani": 0.33
+      },
+      "vector": [
+        12.0,
+        0.0,
+        0.0,
+        12.0,
+        0.7,
+        0.0,
+        2.0,
+        0.33
+      ],
+      "predicted_label": 0,
+      "positive_probability": 0.0,
+      "probabilities": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "id": "case_3_mid_prev_failed",
+      "description": "Orta Seviye: 1 önceki başarısız karar, 28s süre, 2 tereddüt",
+      "features": {
+        "karar_suresi_sn": 28.0,
+        "karar_degistirme_sayisi": 2.0,
+        "onceki_basarisiz_karar_sayisi": 1.0,
+        "ortalama_karar_suresi_sn": 25.0,
+        "sahne_zorlugu": 0.5,
+        "yardim_kullanim_sayisi": 1.0,
+        "oyuncu_deneyim_seviyesi": 1.0,
+        "sahne_ilerleme_orani": 0.67
+      },
+      "vector": [
+        28.0,
+        2.0,
+        1.0,
+        25.0,
+        0.5,
+        1.0,
+        1.0,
+        0.67
+      ],
+      "predicted_label": 1,
+      "positive_probability": 1.0,
+      "probabilities": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "case_4_senior_stage3_pressure",
+      "description": "Senior KVKK Aşaması: 38s süre, 1 tereddüt, yüksek sahne zorluğu (0.80)",
+      "features": {
+        "karar_suresi_sn": 38.0,
+        "karar_degistirme_sayisi": 1.0,
+        "onceki_basarisiz_karar_sayisi": 0.0,
+        "ortalama_karar_suresi_sn": 22.0,
+        "sahne_zorlugu": 0.8,
+        "yardim_kullanim_sayisi": 0.0,
+        "oyuncu_deneyim_seviyesi": 2.0,
+        "sahne_ilerleme_orani": 1.0
+      },
+      "vector": [
+        38.0,
+        1.0,
+        0.0,
+        22.0,
+        0.8,
+        0.0,
+        2.0,
+        1.0
+      ],
+      "predicted_label": 1,
+      "positive_probability": 1.0,
+      "probabilities": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "case_5_junior_fast_helped",
+      "description": "Destek Alan Junior: 16s süre, 0 tereddüt, önceden 2 kez yardım almış",
+      "features": {
+        "karar_suresi_sn": 16.0,
+        "karar_degistirme_sayisi": 0.0,
+        "onceki_basarisiz_karar_sayisi": 0.0,
+        "ortalama_karar_suresi_sn": 18.0,
+        "sahne_zorlugu": 0.5,
+        "yardim_kullanim_sayisi": 2.0,
+        "oyuncu_deneyim_seviyesi": 0.0,
+        "sahne_ilerleme_orani": 0.67
+      },
+      "vector": [
+        16.0,
+        0.0,
+        0.0,
+        18.0,
+        0.5,
+        2.0,
+        0.0,
+        0.67
+      ],
+      "predicted_label": 0,
+      "positive_probability": 0.0,
+      "probabilities": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "id": "case_6_edge_boundary_high",
+      "description": "Sınır Durumu: Tam 35s süre ve 2 tereddüt",
+      "features": {
+        "karar_suresi_sn": 35.0,
+        "karar_degistirme_sayisi": 2.0,
+        "onceki_basarisiz_karar_sayisi": 1.0,
+        "ortalama_karar_suresi_sn": 30.0,
+        "sahne_zorlugu": 0.7,
+        "yardim_kullanim_sayisi": 1.0,
+        "oyuncu_deneyim_seviyesi": 1.0,
+        "sahne_ilerleme_orani": 0.67
+      },
+      "vector": [
+        35.0,
+        2.0,
+        1.0,
+        30.0,
+        0.7,
+        1.0,
+        1.0,
+        0.67
+      ],
+      "predicted_label": 1,
+      "positive_probability": 1.0,
+      "probabilities": [
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "parity_tolerance": 0.0001
+}
